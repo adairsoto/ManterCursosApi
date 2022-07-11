@@ -1,0 +1,54 @@
+<button type="button" class="btn btn-secondary m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addModal();">
+    Adicionar Curso
+</button>
+
+<table class="table table-hover table-sm">
+    <thead>
+        <th>Id</th>
+        <th>Curso</th>
+        <th>Categoria</th>
+        <th>Descrição</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th>Qtd Alunos</th>
+        <th>Status</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of cursoList$|async">
+            <td>{{c.id}}</td>
+            <td>{{c.nome}}</td>
+            <td>{{cursoCategoriaMap.get(c.cursoCategoriaId)}}</td>
+            <td>{{c.descricao}}</td>
+            <td>{{c.dataInicio | date:"dd/MM/yyyy"}}</td>
+            <td>{{c.dataTermino | date:"dd/MM/yyyy"}}</td>
+            <td>{{c.quantidadeAlunos}}</td>
+            <td>{{c.status}}</td>
+            <td>
+                <button (click)="editModal(c)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-secondary me-2 mb-1">
+                    <img height="25" src="assets/edit.png" alt="">
+                </button>
+                <button  (click)="removerCurso(c)" class="btn btn-outline-secondary me-2 mb-1">
+                    <img height="25" src="assets/delete.png" alt="">
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Add/Edit Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()" id="add-edit-modal-close"></button>
+            </div>
+            <div class="modal-body">
+                <app-add-edit-cursos [curso]="curso" *ngIf="formON"></app-add-edit-cursos>
+            </div>
+        </div>
+    </div>
+</div>

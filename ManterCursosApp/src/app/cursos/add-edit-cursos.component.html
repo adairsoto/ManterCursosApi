@@ -1,0 +1,48 @@
+<form>
+    <div class="mb-3 form-group">
+        <label for="nome" class="form-label">Título</label>
+        <input type="text" class="form-control" id="nome" required [(ngModel)]= "nome" name="nome" #tt="ngModel">
+        <div [hidden]="!tt.touched || tt.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="cursoCategoriaId" class="form-label">Categoria</label>
+        <select class="form-control" id="cursoCategoriaId" required [(ngModel)]="cursoCategoriaId" name="cursoCategoriaId" #cci="ngModel">
+            <option *ngFor="let c of cursoCategoriaList$ | async" [value]="c.id">{{c.categoriaNome}}</option>
+        </select>
+        <div [hidden]="!cci.touched || cci.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="descricao" class="form-label">Descrição</label>
+        <input type="text" class="form-control" id="descricao" required [(ngModel)]= "descricao" name="descricao" #dc="ngModel">
+        <div [hidden]="!dc.touched || dc.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="dataInicio" class="form-label">Data de Início</label>
+        <input type="date" class="form-control" id="dataInicio" required [(ngModel)]= "dataInicio" name="dataInicio" #di="ngModel">
+        <div [hidden]="!di.touched || di.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="dataTermino" class="form-label">Data de Término</label>
+        <input type="date" class="form-control" id="dataTermino" required [(ngModel)]= "dataTermino" name="dataTermino" #dt="ngModel">
+        <div [hidden]="!dt.touched || dt.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="quantidadeAlunos" class="form-label">Quantidade de Alunos</label>
+        <input type="number" class="form-control" id="quantidadeAlunos" required [(ngModel)]= "quantidadeAlunos" name="quantidadeAlunos">
+    </div>
+    <div class="mb-3 form-group">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-control" id="status" required [(ngModel)]= "status" name="status" #stt="ngModel">
+            <option *ngFor="let s of statusList$|async" [value]="s.statusOpcao">{{ s.statusOpcao }}</option>
+        </select>
+        <div [hidden]="!stt.touched || stt.valid" class="alert alert-danger">Campo Obrigatório</div>
+    </div>
+    <!-- <button class="btn btn-outline-secondary" type="submit"><img height="25" src="assets/save.png" alt=""></button> -->
+
+    <button (click)="adicionarCurso()" class="btn btn-primary" *ngIf="curso.id==0">
+        Adicionar
+    </button>
+    <button  (click)="atualizarCurso()" class="btn btn-secondary" *ngIf="curso.id!=0">
+        Atualizar
+    </button>
+</form>
