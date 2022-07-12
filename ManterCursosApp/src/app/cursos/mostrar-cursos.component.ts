@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CursosapiService } from '../cursosapi.service';
+import { Curso } from '../interfaces';
 
 
 @Component({
@@ -15,17 +16,32 @@ export class MostrarCursosComponent implements OnInit {
   cursoCategoriaList$!:Observable<any[]>;
   cursoCategoriaList:any[];
 
+  inicio = new  Date('January 01, 2022 13:30:00');
+  termino =  new Date('December 31, 2022 13:30:00');
+
   cursoCategoriaMap:Map<number, string> = new Map()
   modalTitle:string = '';
   formON:boolean = false;
   curso:any; 
   currentDate = new Date();
+  cursoList: Curso[];
+  cursoListFormatted: Curso[];
 
+  
   constructor(private service: CursosapiService, private toastr: ToastrService) { }
 
+
   ngOnInit(): void {
+    this.service.getCursoList().subscribe((data: any) => {
+    this.cursoList = data; });
     this.cursoList$ = this.service.getCursoList();
     this.refreshCursoCategoriaMap();
+  }
+  ver() {
+    console.log('inicio:', this.inicio);
+    console.log('termino:', this.termino);
+    // const dataInicioFormated = Date.parse(formatDate(this.cursoTest[i].dataInicio, 'yyyy-MM-dd', 'en-US'));
+    // console.log('datainicioCursoFormated:', dataInicioFormated);
   }
 
   refreshCursoCategoriaMap() {

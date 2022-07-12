@@ -59,8 +59,8 @@ namespace ManterCursosAPI.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataTermino = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataInicio = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DataTermino = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     QuantidadeAlunos = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CursoCategoriaId = table.Column<int>(type: "int", nullable: false)

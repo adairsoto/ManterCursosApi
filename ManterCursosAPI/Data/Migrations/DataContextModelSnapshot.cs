@@ -33,11 +33,11 @@ namespace ManterCursosAPI.Data.Migrations
                     b.Property<int>("CursoCategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DataInicio")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DataTermino")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DataTermino")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Descricao")
                         .IsRequired()

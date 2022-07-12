@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManterCursosAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220710220721_Start")]
+    [Migration("20220712111746_Start")]
     partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,11 +35,11 @@ namespace ManterCursosAPI.Data.Migrations
                     b.Property<int>("CursoCategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DataInicio")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DataTermino")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DataTermino")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Descricao")
                         .IsRequired()

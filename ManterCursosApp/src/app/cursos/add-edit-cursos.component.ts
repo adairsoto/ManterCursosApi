@@ -23,8 +23,8 @@ export class AddEditCursosComponent implements OnInit {
   id: number = 0;
   nome: string = "";
   descricao: string = "";
-  dataInicio: string = "";
-  dataTermino: string = "";
+  dataInicio: Date;
+  dataTermino: Date;
   quantidadeAlunos: number;
   status: string = "";
   cursoCategoriaId: number;
@@ -44,6 +44,7 @@ export class AddEditCursosComponent implements OnInit {
   }
 
   adicionarCurso() {
+    
     var curso = {
       nome: this.nome,
       descricao: this.descricao,
@@ -82,7 +83,7 @@ export class AddEditCursosComponent implements OnInit {
         if (((dip + adj) < Date.parse(res[i].dataInicio) && (dtp + adj) < Date.parse(res[i].dataInicio)) || 
             ((dip + adj) > Date.parse(res[i].dataTermino) && (dtp + adj) > Date.parse(res[i].dataTermino))) 
         {
-          console.log((Date.parse(this.dataInicio) + adj), Date.parse(res[i].dataInicio));
+          // console.log((Date.parse(this.dataInicio) + adj), Date.parse(res[i].dataInicio));
 
           if (dip < cdp) {
             this.toastr.warning('', 'Data de início não pode ser menor que a data de hoje!');

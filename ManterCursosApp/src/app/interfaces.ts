@@ -7,8 +7,8 @@ export interface Curso {
     id: number;
     nome: string;
     descricao: string;
-    dataInicio: string;
-    dataTermino: string;
+    dataInicio: number;
+    dataTermino: number;
     quantidadeAlunos: number;
     status: string;
     cursoCategoriaId: number;
