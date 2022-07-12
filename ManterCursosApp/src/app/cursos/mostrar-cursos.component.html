@@ -1,3 +1,5 @@
+<app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
+
 <button type="button" class="btn btn-secondary m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addModal();">
     Adicionar Curso
 </button>
@@ -13,25 +15,25 @@
         <th>Qtd Alunos</th>
         <th>Status</th>
     </thead>
-    <tbody>
-        <tr *ngFor="let c of cursoList$|async">
-            <td>{{c.id}}</td>
-            <td>{{c.nome}}</td>
-            <td>{{cursoCategoriaMap.get(c.cursoCategoriaId)}}</td>
-            <td>{{c.descricao}}</td>
-            <td>{{c.dataInicio | date:"dd/MM/yyyy"}}</td>
-            <td>{{c.dataTermino | date:"dd/MM/yyyy"}}</td>
-            <td>{{c.quantidadeAlunos}}</td>
-            <td>{{c.status}}</td>
-            <td>
-                <button (click)="editModal(c)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-secondary me-2 mb-1">
-                    <img height="25" src="assets/edit.png" alt="">
-                </button>
-                <button  (click)="removerCurso(c)" class="btn btn-outline-secondary me-2 mb-1">
-                    <img height="25" src="assets/delete.png" alt="">
-                </button>
-            </td>
-        </tr>
+    <tbody *ngFor="let c of cursoList$|async">
+            <tr *ngIf="searchText === '' || c.nome.toLowerCase().includes(searchText) || cursoCategoriaMap.get(c.cursoCategoriaId).toLowerCase().includes(searchText)">
+                <td>{{c.id}}</td>
+                <td>{{c.nome}}</td>
+                <td>{{cursoCategoriaMap.get(c.cursoCategoriaId)}}</td>
+                <td>{{c.descricao}}</td>
+                <td>{{c.dataInicio | date:"dd/MM/yyyy"}}</td>
+                <td>{{c.dataTermino | date:"dd/MM/yyyy"}}</td>
+                <td>{{c.quantidadeAlunos}}</td>
+                <td>{{c.status}}</td>
+                <td>
+                    <button (click)="editModal(c)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-secondary me-2 mb-1">
+                        <img height="25" src="assets/edit.png" alt="">
+                    </button>
+                    <button  (click)="removerCurso(c)" class="btn btn-outline-secondary me-2 mb-1">
+                        <img height="25" src="assets/delete.png" alt="">
+                    </button>
+                </td>
+            </tr>
     </tbody>
 </table>
 

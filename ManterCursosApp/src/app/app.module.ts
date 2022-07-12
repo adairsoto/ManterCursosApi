@@ -11,6 +11,7 @@ import { CursosComponent } from './cursos/cursos.component';
 import { MostrarCursosComponent } from './cursos/mostrar-cursos.component';
 import { CursosapiService } from './cursosapi.service';
 import { AddEditCursosComponent } from './cursos/add-edit-cursos.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AddEditCursosComponent } from './cursos/add-edit-cursos.component';
     CursosComponent,
     MostrarCursosComponent,
     AddEditCursosComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
