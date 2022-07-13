@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -16,8 +17,9 @@ export class MostrarCursosComponent implements OnInit {
   cursoCategoriaList$!:Observable<any[]>;
   cursoCategoriaList:any[];
 
-  inicio = new  Date('January 01, 2022 13:30:00');
-  termino =  new Date('December 31, 2022 13:30:00');
+  inicio = new Date('January 01, 2020 13:30:00');
+  termino =  new Date('December 31, 2024 13:30:00');
+  searchText: string = '';
 
   cursoCategoriaMap:Map<number, string> = new Map()
   modalTitle:string = '';
@@ -26,10 +28,8 @@ export class MostrarCursosComponent implements OnInit {
   currentDate = new Date();
   cursoList: Curso[];
   cursoListFormatted: Curso[];
-
   
   constructor(private service: CursosapiService, private toastr: ToastrService) { }
-
 
   ngOnInit(): void {
     this.service.getCursoList().subscribe((data: any) => {
@@ -38,8 +38,8 @@ export class MostrarCursosComponent implements OnInit {
     this.refreshCursoCategoriaMap();
   }
   ver() {
-    console.log('inicio:', this.inicio);
-    console.log('termino:', this.termino);
+    console.log('inicio:', Date.parse(formatDate(this.inicio, 'yyyy-MM-dd', 'en-US')));
+    console.log('termino:', Date.parse(formatDate(this.termino, 'yyyy-MM-dd', 'en-US')));
     // const dataInicioFormated = Date.parse(formatDate(this.cursoTest[i].dataInicio, 'yyyy-MM-dd', 'en-US'));
     // console.log('datainicioCursoFormated:', dataInicioFormated);
   }
@@ -107,10 +107,15 @@ export class MostrarCursosComponent implements OnInit {
     }
   }
 
-  searchText: string = '';
+  
   
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
-    // console.log(this.searchText);
+  }
+
+  limparFiltros() {
+    this.inicio = new Date('January 01, 2020 13:30:00');
+    this.termino =  new Date('December 31, 2024 13:30:00');
+    this.searchText= '';
   }
 }

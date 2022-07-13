@@ -1,24 +1,10 @@
-#add-success-alert,
-#update-success-alert,
-#delete-success-alert {
-    display: none;
+.btn {
+    height: 40px;
+    align-content: center;
+    padding: 8px 12px 10px;
+    
 }
 
-#add-success-alert,
-#update-success-alert,
-#delete-success-alert {
-    animation-name: fadeInAndOut;
-    animation-duration: 4s;
-}
-
-@keyframes fadeInAndOut {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
-}
-
-@-webkit-keyframes fadeInAndOut {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
-}
+/* .table {
+    text-align: center;
+} */

@@ -11,8 +11,9 @@ import { CursosComponent } from './cursos/cursos.component';
 import { MostrarCursosComponent } from './cursos/mostrar-cursos.component';
 import { CursosapiService } from './cursosapi.service';
 import { AddEditCursosComponent } from './cursos/add-edit-cursos.component';
-import { SearchComponent } from './search/search.component';
 import { FiltroDataPipe } from './filtro-data.pipe';
+import { LogsComponent } from './logs/logs.component';
+import { FiltroLogsPipe } from './filtro-logs.pipe';
 
 
 @NgModule({
@@ -21,8 +22,9 @@ import { FiltroDataPipe } from './filtro-data.pipe';
     CursosComponent,
     MostrarCursosComponent,
     AddEditCursosComponent,
-    SearchComponent,
     FiltroDataPipe,
+    LogsComponent,
+    FiltroLogsPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,34 @@
+<div class="row mt-4">
+    <div class="col-md-5">
+        <div class="search-container">
+            <input type="text" id="myInput" class="search-box" placeholder="Filtrar logs..." [(ngModel)]="searchText">
+        </div>
+    </div>
+    <div class="col-md-3 py-1">
+        <input style="opacity: 0.55; border-radius: 5px;" type="date" [(ngModel)]="inicio" name="inicio"> 
+        <input class="float-end" style="opacity: 0.55; border-radius: 5px;" type="date" [(ngModel)]="termino" name="termino">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-secondary float-end" onclick="document.getElementById('myInput').value = ''" (click)="limparFiltros();">
+            Limpar Filtros
+        </button>
+    </div>
+
+</div>
+
+<table style="text-align: center;" class="table table-hover table-sm text-light mt-3">
+    <thead >
+        <th>Responsável</th>
+        <th>Curso</th>
+        <th>Ação</th>
+        <th>Timestamp</th>
+    </thead>
+    <tbody *ngFor="let l of logList$ | async | filtroLogs: inicio: termino">
+            <tr *ngIf="searchText === '' || l.curso.toLowerCase().includes(searchText) || l.logTipo.toLowerCase().includes(searchText) || l.responsavel.toLowerCase().includes(searchText)">
+                <td>{{l.responsavel}}</td>
+                <td>{{l.curso}}</td>
+                <td>{{l.logTipo}}</td>
+                <td>{{l.timestamp | date:"dd/MM/yyyy hh:mm:ss"}}</td>
+            </tr>
+    </tbody>
+</table>

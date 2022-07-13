@@ -7,9 +7,9 @@
     <div class="mb-3 form-group">
         <label for="cursoCategoriaId" class="form-label">Categoria</label>
         <select class="form-control" id="cursoCategoriaId" required [(ngModel)]="cursoCategoriaId" name="cursoCategoriaId" #cci="ngModel">
-            <option *ngFor="let c of cursoCategoriaList$ | async" [value]="c.id">{{c.categoriaNome}}</option>
+            <option class="text-light bg-primary" *ngFor="let c of cursoCategoriaList$ | async" [value]="c.id">{{c.categoriaNome}}</option>
         </select>
-        <div [hidden]="!cci.touched || cci.valid" class="alert alert-danger">Campo Obrigatório</div>
+        <div style="height: 5mm; vertical-align:middle;" [hidden]="!cci.touched || cci.valid" class="alert alert-danger">Campo Obrigatório</div>
     </div>
     <div class="mb-3 form-group">
         <label for="descricao" class="form-label">Descrição</label>
@@ -42,7 +42,7 @@
     <button (click)="adicionarCurso()" class="btn btn-primary" *ngIf="curso.id==0">
         Adicionar
     </button>
-    <button  (click)="atualizarCurso()" class="btn btn-secondary" *ngIf="curso.id!=0">
+    <button  (click)="atualizarCurso()" class="btn btn-primary" *ngIf="curso.id!=0">
         Atualizar
     </button>
 </form>
