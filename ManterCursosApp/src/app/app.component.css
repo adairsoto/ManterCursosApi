@@ -1,0 +1,14 @@
+.btn {
+    height: 40px;
+    align-content: center;
+    padding: 8px 12px 10px;
+    width: 80px;
+}
+.navbar.center .navbar-inner {
+    text-align: center;
+}
+
+.navbar.center .navbar-inner .nav {
+    display:inline-block;
+    float: none;
+}

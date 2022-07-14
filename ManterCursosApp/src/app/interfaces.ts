@@ -18,3 +18,9 @@ export interface Status {
     id: number;
     statusOpcao: string;
 }
+
+export interface Admin {
+    email: string;
+    nome: string;
+    token: string;
+}

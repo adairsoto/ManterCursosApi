@@ -1,8 +1,9 @@
-﻿namespace ManterCursosAPI.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ManterCursosAPI.Models
 {
-    public class Admin
+    public class Admin : IdentityUser 
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
     }
 }

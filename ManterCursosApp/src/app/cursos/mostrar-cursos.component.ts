@@ -1,9 +1,8 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CursosapiService } from '../cursosapi.service';
-import { Curso } from '../interfaces';
+import { Admin } from '../interfaces';
 
 
 @Component({
@@ -12,13 +11,14 @@ import { Curso } from '../interfaces';
   styleUrls: ['./mostrar-cursos.component.css']
 })
 export class MostrarCursosComponent implements OnInit {
-  
+  currentUser: any;
+  currentUser$: Observable<Admin>;
   cursoList$!:Observable<any[]>;
   cursoCategoriaList$!:Observable<any[]>;
   cursoCategoriaList:any[];
 
-  inicio = new Date('January 01, 2020 13:30:00');
-  termino =  new Date('December 31, 2024 13:30:00');
+  inicio = new Date('January 01, 2020 01:30:00');
+  termino =  new Date('December 31, 2024 01:30:00');
   searchText: string = '';
 
   cursoCategoriaMap:Map<number, string> = new Map()
@@ -26,24 +26,15 @@ export class MostrarCursosComponent implements OnInit {
   formON:boolean = false;
   curso:any; 
   currentDate = new Date();
-  cursoList: Curso[];
-  cursoListFormatted: Curso[];
   
   constructor(private service: CursosapiService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.service.getCursoList().subscribe((data: any) => {
-    this.cursoList = data; });
+    this.currentUser = this.service.getCurrentUserValue();
     this.cursoList$ = this.service.getCursoList();
     this.refreshCursoCategoriaMap();
   }
-  ver() {
-    console.log('inicio:', Date.parse(formatDate(this.inicio, 'yyyy-MM-dd', 'en-US')));
-    console.log('termino:', Date.parse(formatDate(this.termino, 'yyyy-MM-dd', 'en-US')));
-    // const dataInicioFormated = Date.parse(formatDate(this.cursoTest[i].dataInicio, 'yyyy-MM-dd', 'en-US'));
-    // console.log('datainicioCursoFormated:', dataInicioFormated);
-  }
-
+  
   refreshCursoCategoriaMap() {
     this.service.getCursoCategoriaList().subscribe(data => {
       this.cursoCategoriaList = data;
@@ -97,7 +88,7 @@ export class MostrarCursosComponent implements OnInit {
         this.toastr.success('','Curso removido com sucesso!');
         });
         var log = {
-          responsavel: 'Diogo',
+          responsavel: this.currentUser.nome,
           curso: item.nome,
           logTipo: 'Exclusão',
           timestamp: this.currentDate     
@@ -106,8 +97,6 @@ export class MostrarCursosComponent implements OnInit {
       }
     }
   }
-
-  
   
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;

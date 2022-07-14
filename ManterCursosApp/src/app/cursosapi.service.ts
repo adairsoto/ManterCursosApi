@@ -1,16 +1,57 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Curso } from './interfaces';
+import { Router } from '@angular/router';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Admin, Curso } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CursosapiService {
 
-  readonly apiUrl = 'https://localhost:7096/api';
+  apiUrl = 'https://localhost:7096/api';
+  private currentUserSource = new BehaviorSubject<Admin>(null);
+  currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
+  // Login/Logout
+
+  getCurrentUserValue() {
+    return this.currentUserSource.value;
+  }
+
+  loadCurrentUser(token: string) {
+   
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.get(this.apiUrl + '/account', {headers}).pipe(
+      map((user: Admin) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+        }
+      })
+    )
+  }
+
+  login(values: any) {
+    return this.http.post(this.apiUrl + '/account/login', values).pipe(
+      map((user: Admin) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+        }
+      })
+    )
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
+    this.router.navigateByUrl('/');
+  }
 
   // Curso
 

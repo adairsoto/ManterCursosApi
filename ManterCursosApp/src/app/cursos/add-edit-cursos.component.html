@@ -9,7 +9,7 @@
         <select class="form-control" id="cursoCategoriaId" required [(ngModel)]="cursoCategoriaId" name="cursoCategoriaId" #cci="ngModel">
             <option class="text-light bg-primary" *ngFor="let c of cursoCategoriaList$ | async" [value]="c.id">{{c.categoriaNome}}</option>
         </select>
-        <div style="height: 5mm; vertical-align:middle;" [hidden]="!cci.touched || cci.valid" class="alert alert-danger">Campo Obrigatório</div>
+        <div [hidden]="!cci.touched || cci.valid" class="alert alert-danger">Campo Obrigatório</div>
     </div>
     <div class="mb-3 form-group">
         <label for="descricao" class="form-label">Descrição</label>
@@ -33,12 +33,10 @@
     <div class="mb-3 form-group">
         <label for="status" class="form-label">Status</label>
         <select class="form-control" id="status" required [(ngModel)]= "status" name="status" #stt="ngModel">
-            <option *ngFor="let s of statusList$|async" [value]="s.statusOpcao">{{ s.statusOpcao }}</option>
+            <option class="text-light bg-primary" *ngFor="let s of statusList$|async" [value]="s.statusOpcao">{{ s.statusOpcao }}</option>
         </select>
         <div [hidden]="!stt.touched || stt.valid" class="alert alert-danger">Campo Obrigatório</div>
     </div>
-    <!-- <button class="btn btn-outline-secondary" type="submit"><img height="25" src="assets/save.png" alt=""></button> -->
-
     <button (click)="adicionarCurso()" class="btn btn-primary" *ngIf="curso.id==0">
         Adicionar
     </button>

@@ -11,6 +11,7 @@ import { CursosapiService } from '../cursosapi.service';
 })
 export class AddEditCursosComponent implements OnInit {
 
+  currentUser: any;
   cursoList$!: Observable<any[]>;
   cursoCategoriaList$!: Observable<any[]>;
   statusList$!: Observable<any[]>;
@@ -41,6 +42,7 @@ export class AddEditCursosComponent implements OnInit {
     this.cursoList$ = this.service.getCursoList();
     this.cursoCategoriaList$ = this.service.getCursoCategoriaList();
     this.statusList$ = this.service.getStatusList();
+    this.currentUser = this.service.getCurrentUserValue();
   }
 
   adicionarCurso() {
@@ -55,7 +57,7 @@ export class AddEditCursosComponent implements OnInit {
       cursoCategoriaId: this.cursoCategoriaId
     }
     var log = {
-      responsavel: 'João',
+      responsavel: this.currentUser.nome,
       curso: this.nome,
       logTipo: 'Inclusão',
       timestamp: this.timestamp
@@ -90,7 +92,7 @@ export class AddEditCursosComponent implements OnInit {
           }
         }
         else {
-          this.toastr.warning('', 'Já existe um curso cadastrado no período indicado!');
+          this.toastr.warning('', 'Existe(m) curso(s) planejados(s) dentro do período informado.');
           return
         }
         continue
@@ -120,10 +122,10 @@ export class AddEditCursosComponent implements OnInit {
     }
 
     var log = {
-      responsavel: 'Rafael',
+      responsavel: this.currentUser.nome,
       curso: this.nome,
       logTipo: 'Atualização',
-      timestamp: this.currentDate
+      timestamp: this.timestamp
     }
 
     var cdp = Date.parse(formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US'));
@@ -163,7 +165,7 @@ export class AddEditCursosComponent implements OnInit {
           }
         }
         else {
-          this.toastr.warning('', 'Já existe um curso cadastrado no período indicado!');
+          this.toastr.warning('', 'Existe(m) curso(s) planejados(s) dentro do período informado.');
           return
         }
         continue

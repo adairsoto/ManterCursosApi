@@ -1,11 +1,14 @@
 using ManterCursosAPI.Data;
+using ManterCursosAPI.Extensions;
+using ManterCursosAPI.Interfaces;
+using ManterCursosAPI.Models;
+using ManterCursosAPI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-
-
 
 // Add services to the container.
 
@@ -18,7 +21,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+});
 
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,
@@ -29,6 +37,8 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
         });
 });
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -41,6 +51,11 @@ using (var scope = app.Services.CreateScope())
        var context = services.GetRequiredService<DataContext>();
        await context.Database.MigrateAsync();
        await PresetContext.PresetAsync(context, loggerFactory);
+
+       var userManager = services.GetRequiredService<UserManager<Admin>>();
+       var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+       await identityContext.Database.MigrateAsync();
+       await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
     }
     catch (Exception ex)
     {
@@ -59,6 +74,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrigins);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
